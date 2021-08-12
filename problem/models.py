@@ -3,7 +3,7 @@ from problem_management import settings
 from django.utils.text import slugify
 from time import time
 
-
+# generate a slug of name and time
 def generate_slug(name):
     new_slug = slugify(name, allow_unicode=True)
     return new_slug + '-' + str(int(time()))
