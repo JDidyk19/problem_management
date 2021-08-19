@@ -1,0 +1,14 @@
+{#{{ problem.name_problem }}#}
+////////////////////////
+<h3>СОЛУТІОНИ</h3>
+{% for solution in solutions %}
+    <p>
+        {{ solution.time_submished }} {{ solution.accepted }} {{ solution.memory }}
+        <a href="{% url 'delete_solution' solution_id=solution.pk %}"> Delete</a>
+    </p>
+{% endfor %}
+
+<h3>Нотатки</h3>
+{% for notate in notates %}
+    {{ notate.notate }}
+{% endfor %}

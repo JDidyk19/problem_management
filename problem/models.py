@@ -23,7 +23,7 @@ class Problem(models.Model):
         (Hard, 'Hard'),
     ]
     # DATABASE FIELDS
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='problems', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name_problem = models.CharField('Problem name', max_length=150)
     slug = models.SlugField('Url', max_length=150, blank=True, unique=True)
     url_problem = models.CharField('Problem\'s url from some site', max_length=150)

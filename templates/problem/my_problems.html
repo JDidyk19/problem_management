@@ -1,0 +1,8 @@
+{% for problem in problems %}
+    <p>
+        <a href="{% url 'detail_problem' slug=problem.slug %}">{{ problem.name_problem }} {{ problem.slug }}</a>
+        <a href="{% url 'delete_problem' problem_id=problem.pk %}">Delete</a>
+    </p>
+{% endfor %}
+
+{{ request.user }}
