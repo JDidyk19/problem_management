@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Problem, Solution, Notate
+from .forms import ProblemCreateForm
 
 
 def my_problems(request):
@@ -7,7 +8,7 @@ def my_problems(request):
         'name_problem', 'slug', 'difficulty'
     )
     context = {
-        'problems': problems
+        'problems': problems,
     }
     return render(request, 'problem/my_problems.html', context)
 
@@ -16,16 +17,31 @@ def detail_problem(request, slug):
     problem = Problem.objects.get(slug=slug)
     solutions = Solution.objects.filter(problem_id=problem.pk)
     notates = Notate.objects.filter(problem_id=problem.pk)
+
     context = {
         'problem': problem,
         'solutions': solutions,
-        'notates': notates
+        'notates': notates,
     }
     return render(request, 'problem/problem_detail.html', context)
 
 
 def add_problem(request):
-    pass
+    if request.method == 'POST':
+        form = ProblemCreateForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            problem = form.save(commit=False)
+            problem.user = request.user
+            problem.save()
+            return redirect('detail_problem', slug=problem.slug)
+        return redirect('my_problems')
+    else:
+        form = ProblemCreateForm(request.POST or None, request.FILES or None)
+        context = {
+            'add_problem': form
+        }
+    return render(request, 'problem/add_problem_form.html', context)
+
 
 
 def delete_problem(request, problem_id):
