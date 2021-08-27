@@ -1,4 +1,12 @@
 ////////////////////////
+<a href="{% url 'add_solution' slug=problem.slug %}">Add Solution</a>
+<a href="{% url 'add_notate' slug=problem.slug %}">Add Notate</a>
+
+{% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}
 <h3>СОЛУТІОНИ</h3>
 {% for solution in solutions %}
     <p>
@@ -9,5 +17,8 @@
 
 <h3>Нотатки</h3>
 {% for notate in notates %}
-    {{ notate.notate }}
+        <p>
+        {{ notate.notate }}
+        <a href="{% url 'delete_notate' notate_id=notate.pk %}"> Delete</a>
+    </p>
 {% endfor %}

@@ -7,7 +7,6 @@ class ProblemCreateForm(forms.ModelForm):
         model = Problem
         fields = ['name_problem', 'url_problem', 'difficulty']
 
-
 class AddSolutionForm(forms.ModelForm):
     class Meta:
         model = Solution

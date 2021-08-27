@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.db.models import Count
 from .models import Problem, Solution, Notate
-from .forms import ProblemCreateForm
+from .forms import ProblemCreateForm, AddSolutionForm, AddNotateForm
 
 
 def my_problems(request):
-    problems = Problem.objects.filter(user_id=request.user.id).only(
+    problems = Problem.objects.filter(user_id=request.user.id).annotate(num_solution=Count('solution')).only(
         'name_problem', 'slug', 'difficulty'
     )
+
     context = {
         'problems': problems,
     }
@@ -37,11 +40,51 @@ def add_problem(request):
         return redirect('my_problems')
     else:
         form = ProblemCreateForm(request.POST or None, request.FILES or None)
+
         context = {
             'add_problem': form
         }
     return render(request, 'problem/add_problem_form.html', context)
 
+
+def add_solution(request, slug):
+    if request.method == 'POST':
+        problem = Problem.objects.get(slug=slug)
+        form = AddSolutionForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            solution = form.save(commit=False)
+            solution.problem = problem
+            solution.save()
+            messages.add_message(request, messages.INFO, 'Solution added successfully')
+            return redirect('detail_problem', slug=problem.slug)
+        return redirect('detail_problem', slug=problem.slug)
+    else:
+        form = AddSolutionForm(request.POST or None, request.FILES or None)
+
+        context = {
+            'add_solution': form,
+        }
+    return render(request, 'problem/add_solution.html', context)
+
+
+def add_notate(request, slug):
+    if request.method == 'POST':
+        problem = Problem.objects.get(slug=slug)
+        form = AddNotateForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            notate = form.save(commit=False)
+            notate.problem = problem
+            notate.save()
+            return redirect('detail_problem', slug=problem.slug)
+        # Написати message
+        return redirect('detail_problem', slug=problem.slug)
+    else:
+        form = AddNotateForm(request.POST or None, request.FILES or None)
+
+        context = {
+            'add_notate': form,
+        }
+    return render(request, 'problem/add_notate.html', context)
 
 
 def delete_problem(request, problem_id):
@@ -62,4 +105,3 @@ def delete_notate(request, notate_id):
     problem = notate.problem.slug
     notate.delete()
     return redirect('detail_problem', slug=problem)
-
