@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+    {{ login_form.non_field_errors }}
+    {% for f in login_form %}
+        {{ f.errors }}
+        {{ f }}
+    {% endfor %}
+    <input type="submit" class="fourth" value="Log In">
+</form>

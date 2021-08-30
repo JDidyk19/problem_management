@@ -8,7 +8,7 @@ import debug_toolbar
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('', include('account.urls')),
+    path('', include('account.urls')),
     path('problems/', include('problem.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

@@ -1,5 +1,9 @@
 <a href="{% url 'add_problem' %}">Add Problem</a>
 
+<p>
+    <a href="{% url 'profile' username=request.user.username %}">Profile</a>
+</p>>
+
 {% for problem in problems %}
     <p>
         {{ problem.num_solution }}
@@ -7,5 +11,3 @@
         <a href="{% url 'delete_problem' problem_id=problem.pk %}">Delete</a>
     </p>
 {% endfor %}
-
-{{ request.user }}
