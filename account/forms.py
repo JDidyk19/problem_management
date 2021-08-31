@@ -13,7 +13,6 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm, forms.ModelForm):
-
     class Meta:
         model = UserProfile
         fields = ['username', 'password']

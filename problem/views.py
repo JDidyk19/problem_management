@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Count
+from .filters import ProductFilter
 from .models import Problem, Solution, Notate
 from .forms import ProblemCreateForm, AddSolutionForm, AddNotateForm
 
@@ -9,9 +10,11 @@ def my_problems(request):
     problems = Problem.objects.filter(user_id=request.user.id).annotate(num_solution=Count('solution')).only(
         'name_problem', 'slug', 'difficulty'
     )
-
+    filter = ProductFilter(request.GET, queryset=problems)
+    problems = filter.qs
     context = {
         'problems': problems,
+        'filter': filter
     }
     return render(request, 'problem/my_problems.html', context)
 

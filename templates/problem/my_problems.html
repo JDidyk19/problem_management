@@ -2,7 +2,12 @@
 
 <p>
     <a href="{% url 'profile' username=request.user.username %}">Profile</a>
-</p>>
+</p>
+
+<form method="get">
+    {{ filter.form.name_problem }}
+    <input type="submit" value="Search">
+</form>
 
 {% for problem in problems %}
     <p>

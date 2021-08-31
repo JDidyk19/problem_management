@@ -11,7 +11,7 @@ def generate_slug(name):
 
 class Problem(models.Model):
     ''' Problem model '''
-    # CHOICES
+    # CHOICES DIFFICULTY
     Easy = 'Easy'
     Medium = 'Medium'
     Hard = 'Hard'
@@ -48,7 +48,7 @@ class Problem(models.Model):
 
 class Solution(models.Model):
     ''' Solution model '''
-    # CHOICES
+    # CHOICES STATUS
     accepted = 'Accepted'
     wrong = 'Wrong Answer'
     NA = 'NA'

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'django_filters',
 
     'problem.apps.ProblemConfig',
     'account.apps.AccountConfig',
